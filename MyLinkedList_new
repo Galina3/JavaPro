@@ -1,0 +1,64 @@
+package homework_lesson7.task2;
+
+
+import java.util.Iterator;
+
+public class MyLinkedList_new implements Iterable<String> {
+
+    private int size;
+    private Node first;
+    private Node last;
+
+    public Node getLast() {
+        return last;
+    }
+
+    public void setLast(Node last) {
+        this.last = last;
+    }
+
+
+    public void addToHead(String value) {
+        Node node = new Node(value);
+        node.setNext(first);
+        if(first == null) {
+            last = node;
+        }
+        first = node;
+        size++;
+    }
+
+    public void addToTail(String value) {
+        Node newLast = new Node(value);
+        if(last != null) {
+            last.setNext(newLast);
+        } else {
+            first = newLast;
+        }
+        last = newLast;
+        size++;
+    }
+
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[]";
+        }
+        StringBuilder builder = new StringBuilder("[");
+        Node current = first;
+        while (current != null) {
+            builder.append(current.getValue()).append(", ");
+            current = current.getNext();
+        }
+        builder.setLength(builder.length() - 2);  //стираем 2 последних символа в длине нашего builder
+        builder.append("]");
+        // Если лист пустой, то вернуть [B, C, A]
+        // Если лист не пустой, то вернуть строку вида [AAA, BBB, CCC]
+        return builder.toString();
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new MyLinkedList_new(first);
+    }
+}
